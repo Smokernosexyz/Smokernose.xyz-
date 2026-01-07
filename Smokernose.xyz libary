@@ -475,4 +475,14 @@ function Smokernose:CreateWindow(info)
     return Window
 end
 
+--// DEMO
+local Window = Smokernose:CreateWindow({Title = "Smokernose v8"})
+local Legit = Window:CreateTab("Legit")
+local Aim = Legit:Toggle("Aimbot", false, function(v) print("Aim", v) end)
+Aim:AddSlider({Name = "FOV", Min = 0, Max = 100})
+Aim:AddDropdown({Name = "Bone", Options = {"Head", "Torso"}})
 
+local Vis = Window:CreateTab("Visuals")
+Vis:Toggle("ESP", false, function() end)
+
+local Rage = Window:CreateTab("Rage")
