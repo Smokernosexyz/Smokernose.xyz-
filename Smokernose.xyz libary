@@ -1,18 +1,12 @@
---// SMOKERNOSE.XYZ UI LIBRARY
---// Version: 1.0
---// Layout: Vertical Sidebar
-
 local Smokernose = {}
 Smokernose.Version = "1.0"
 
---// SERVICES
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local Player = Players.LocalPlayer
 
---// UI RESET
 local ParentTarget = Player:WaitForChild("PlayerGui")
 for _, v in pairs(ParentTarget:GetChildren()) do
     if v.Name:find("Smokernose") or v.Name:find("Bitchnose") then v:Destroy() end
@@ -25,19 +19,17 @@ GUI.DisplayOrder = 10000
 GUI.IgnoreGuiInset = true
 GUI.Parent = ParentTarget
 
---// THEME
 local Theme = {
-    Main = Color3.fromRGB(15, 15, 15),       -- Tiefschwarz
-    Sidebar = Color3.fromRGB(20, 20, 20),    -- Sidebar Hintergrund
-    Element = Color3.fromRGB(25, 25, 30),    -- Buttons
-    Stroke = Color3.fromRGB(40, 40, 40),     -- Feine Ränder
-    Accent = Color3.fromRGB(120, 100, 255),  -- Abyss Lila (Accent)
+    Main = Color3.fromRGB(15, 15, 15),       
+    Sidebar = Color3.fromRGB(20, 20, 20),    
+    Element = Color3.fromRGB(25, 25, 30),    
+    Stroke = Color3.fromRGB(40, 40, 40),     
+    Accent = Color3.fromRGB(120, 100, 255),  
     Text = Color3.fromRGB(230, 230, 230),
     Muted = Color3.fromRGB(100, 100, 100),
     Font = Enum.Font.Code,
 }
 
---// UTILS
 local function Tween(obj, props, time)
     TweenService:Create(obj, TweenInfo.new(time or 0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
 end
@@ -62,7 +54,6 @@ local function MakeDraggable(gui, trigger)
     end)
 end
 
---// NOTIFICATION SYSTEM
 local Notify
 do
     local Holder = Instance.new("Frame", GUI)
@@ -110,11 +101,9 @@ do
         TContent.Position = UDim2.new(0, 12, 0, 22)
         TContent.TextXAlignment = Enum.TextXAlignment.Left
 
-        -- Anim In
         Frame.Position = UDim2.new(-0.5, 0, 0, 0)
         Tween(Frame, {Position = UDim2.new(0,0,0,0)}, 0.3)
 
-        -- Out
         task.delay(dur, function()
             Tween(Frame, {Position = UDim2.new(-1.2, 0, 0, 0)}, 0.3)
             task.wait(0.3)
@@ -123,13 +112,12 @@ do
     end
 end
 
---// WATERMARK (UPDATED: CENTER TOP)
 task.spawn(function()
     local WM = Instance.new("Frame", GUI)
     WM.Name = "Watermark"
-    WM.AnchorPoint = Vector2.new(0.5, 0) -- Setzt den Ankerpunkt in die Mitte des Frames
+    WM.AnchorPoint = Vector2.new(0.5, 0) 
     WM.Size = UDim2.new(0, 220, 0, 24)
-    WM.Position = UDim2.new(0.5, 0, 0.02, 0) -- 50% Breite (Mitte), 2% von Oben
+    WM.Position = UDim2.new(0.5, 0, 0.02, 0) 
     WM.BackgroundColor3 = Theme.Main
     WM.BorderSizePixel = 0
     
@@ -144,7 +132,7 @@ task.spawn(function()
     WMText.TextColor3 = Theme.Text
     WMText.Font = Theme.Font
     WMText.TextSize = 12
-    WMText.TextXAlignment = Enum.TextXAlignment.Center -- Text zentrieren
+    WMText.TextXAlignment = Enum.TextXAlignment.Center 
     
     while GUI.Parent do
         local fps = math.floor(1 / RunService.RenderStepped:Wait())
@@ -153,11 +141,9 @@ task.spawn(function()
     end
 end)
 
---// MAIN LIBRARY
 function Smokernose:CreateWindow(info)
     local Window = {}
     
-    -- Main Frame
     local Main = Instance.new("Frame", GUI)
     Main.Name = "MainFrame"
     Main.Size = UDim2.new(0, 550, 0, 320)
@@ -169,7 +155,6 @@ function Smokernose:CreateWindow(info)
     Stroke.Color = Theme.Stroke
     Stroke.Thickness = 1.5
     
-    -- Sidebar
     local Sidebar = Instance.new("Frame", Main)
     Sidebar.Name = "Sidebar"
     Sidebar.Size = UDim2.new(0, 140, 1, 0)
@@ -182,7 +167,6 @@ function Smokernose:CreateWindow(info)
     SideLine.BackgroundColor3 = Theme.Stroke
     SideLine.BorderSizePixel = 0
 
-    -- Header Title
     local Title = Instance.new("TextLabel", Sidebar)
     Title.Text = (info.Title or "smokernose"):lower()
     Title.Size = UDim2.new(1, -20, 0, 50)
@@ -193,7 +177,6 @@ function Smokernose:CreateWindow(info)
     Title.TextSize = 13
     Title.TextXAlignment = Enum.TextXAlignment.Left
     
-    -- Tab Container
     local TabContainer = Instance.new("ScrollingFrame", Sidebar)
     TabContainer.Position = UDim2.new(0, 0, 0, 50)
     TabContainer.Size = UDim2.new(1, 0, 1, -50)
@@ -205,14 +188,12 @@ function Smokernose:CreateWindow(info)
     TabList.SortOrder = Enum.SortOrder.LayoutOrder
     TabList.Padding = UDim.new(0, 2)
 
-    -- Content Area
     local ContentArea = Instance.new("Frame", Main)
     ContentArea.Name = "Content"
     ContentArea.Position = UDim2.new(0, 141, 0, 0)
     ContentArea.Size = UDim2.new(1, -141, 1, 0)
     ContentArea.BackgroundTransparency = 1
     
-    -- Close Button
     local CloseBtn = Instance.new("TextButton", ContentArea)
     CloseBtn.Size = UDim2.new(0, 30, 0, 30)
     CloseBtn.Position = UDim2.new(1, -35, 0, 5)
@@ -228,25 +209,21 @@ function Smokernose:CreateWindow(info)
 
     MakeDraggable(Main, Sidebar)
 
-    --// HOME BUTTON (UPDATED: SPECIAL & SMALLER)
     local Home = Instance.new("ImageButton", GUI)
     Home.Name = "SpecialToggle"
-    Home.Size = UDim2.new(0, 34, 0, 34) -- Kleiner (war 45)
+    Home.Size = UDim2.new(0, 34, 0, 34) 
     Home.Position = UDim2.new(0, 15, 0.4, 0)
-    Home.BackgroundColor3 = Theme.Main -- Dunkler Hintergrund
-    Home.Image = "rbxassetid://12043497765" -- Haus Icon
-    Home.ImageColor3 = Theme.Accent -- Icon in Akzentfarbe
+    Home.BackgroundColor3 = Theme.Main 
+    Home.Image = "rbxassetid://12043497765" 
+    Home.ImageColor3 = Theme.Accent 
     
-    -- Kreisförmig machen
     Instance.new("UICorner", Home).CornerRadius = UDim.new(1, 0)
     
-    -- Leuchtender Rand (Neon Effekt)
     local Glow = Instance.new("UIStroke", Home)
     Glow.Color = Theme.Accent
     Glow.Thickness = 2
-    Glow.Transparency = 0.2 -- Leicht transparent für Glow-Look
+    Glow.Transparency = 0.2 
     
-    -- Padding für das Icon innen
     local HPadding = Instance.new("UIPadding", Home)
     HPadding.PaddingBottom = UDim.new(0,7) HPadding.PaddingTop = UDim.new(0,7)
     HPadding.PaddingLeft = UDim.new(0,7) HPadding.PaddingRight = UDim.new(0,7)
@@ -254,14 +231,12 @@ function Smokernose:CreateWindow(info)
     Home.MouseButton1Click:Connect(function() Main.Visible = not Main.Visible end)
     MakeDraggable(Home)
 
-    --// LOGIK
     local Tabs = {}
     local First = true
 
     function Window:CreateTab(name)
         local Tab = {}
         
-        -- Tab Button Style (Sidebar)
         local Btn = Instance.new("TextButton", TabContainer)
         Btn.Size = UDim2.new(1, -20, 0, 30)
         Btn.Position = UDim2.new(0, 10, 0, 0)
@@ -273,7 +248,6 @@ function Smokernose:CreateWindow(info)
         Btn.TextXAlignment = Enum.TextXAlignment.Left
         Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 4)
 
-        -- Page
         local Page = Instance.new("ScrollingFrame", ContentArea)
         Page.Size = UDim2.new(1, -20, 1, -45)
         Page.Position = UDim2.new(0, 10, 0, 40)
@@ -307,7 +281,6 @@ function Smokernose:CreateWindow(info)
         table.insert(Tabs, {Btn = Btn, Page = Page})
         if First then Tab:Activate(); First = false end
 
-        --// MODULE (Accordion)
         function Tab:Toggle(text, default, callback)
             local ToggleObj = {}
             local state = default or false
@@ -320,7 +293,6 @@ function Smokernose:CreateWindow(info)
             Instance.new("UICorner", Wrapper).CornerRadius = UDim.new(0, 4)
             Instance.new("UIStroke", Wrapper).Color = Theme.Stroke
             
-            -- Main Button
             local Label = Instance.new("TextLabel", Wrapper)
             Label.Text = text
             Label.Size = UDim2.new(1, -50, 0, 36)
@@ -338,7 +310,6 @@ function Smokernose:CreateWindow(info)
             Status.BorderSizePixel = 0
             Instance.new("UICorner", Status).CornerRadius = UDim.new(1,0)
             
-            -- Verschiebe Text wenn Checkbox da ist
             Label.Position = UDim2.new(0, 28, 0, 0)
 
             local Arrow = Instance.new("TextButton", Wrapper)
@@ -364,7 +335,6 @@ function Smokernose:CreateWindow(info)
             Clicker.MouseButton1Click:Connect(function() state = not state; UpdateState() end)
             if default then UpdateState() end
 
-            -- Settings Area
             local SettingsContainer = Instance.new("Frame", Wrapper)
             SettingsContainer.Position = UDim2.new(0, 0, 0, 36)
             SettingsContainer.Size = UDim2.new(1, 0, 0, 0)
@@ -382,7 +352,6 @@ function Smokernose:CreateWindow(info)
             SList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(Refresh)
             Arrow.MouseButton1Click:Connect(function() expanded = not expanded; Refresh() end)
 
-            -- SLIDER
             function ToggleObj:AddSlider(info)
                 Arrow.Visible = true
                 local SFrame = Instance.new("Frame", SettingsContainer)
@@ -429,7 +398,6 @@ function Smokernose:CreateWindow(info)
                 Fill.Size = UDim2.new(rel, 0, 1, 0)
             end
 
-            -- DROPDOWN
             function ToggleObj:AddDropdown(info)
                 Arrow.Visible = true
                 local DFrame = Instance.new("Frame", SettingsContainer)
@@ -474,8 +442,7 @@ function Smokernose:CreateWindow(info)
     return Window
 end
 
---// DEMO
-local Window = Smokernose:CreateWindow({Title = "smokernose v1"})
+local Window = Smokernose:CreateWindow({Title = "smokernose.xyz v1"})
 local Legit = Window:CreateTab("Legit")
 local Aim = Legit:Toggle("Aimbot", false, function(v) print("Aim", v) end)
 Aim:AddSlider({Name = "FOV", Min = 0, Max = 100})
