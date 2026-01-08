@@ -1,10 +1,9 @@
 --// SMOKERNOSE.XYZ UI LIBRARY
---// Version: 8.0 (Final Polish)
---// Layout: Vertical Sidebar (Stable)
---// Design: Abyss Dark + Special Toggle + Center Watermark
+--// Version: 1.0
+--// Layout: Vertical Sidebar
 
 local Smokernose = {}
-Smokernose.Version = "8.0-Final"
+Smokernose.Version = "1.0"
 
 --// SERVICES
 local Players = game:GetService("Players")
@@ -20,7 +19,7 @@ for _, v in pairs(ParentTarget:GetChildren()) do
 end
 
 local GUI = Instance.new("ScreenGui")
-GUI.Name = "Smokernose_Abyss_Final"
+GUI.Name = "Smokernose.xyz"
 GUI.ResetOnSpawn = false
 GUI.DisplayOrder = 10000
 GUI.IgnoreGuiInset = true
@@ -149,7 +148,7 @@ task.spawn(function()
     
     while GUI.Parent do
         local fps = math.floor(1 / RunService.RenderStepped:Wait())
-        WMText.Text = string.format("abyss | dev build | %d fps", fps)
+        WMText.Text = string.format("smokernose.xyz | dev build | %d fps", fps)
         task.wait(0.5)
     end
 end)
@@ -476,7 +475,7 @@ function Smokernose:CreateWindow(info)
 end
 
 --// DEMO
-local Window = Smokernose:CreateWindow({Title = "Smokernose v8"})
+local Window = Smokernose:CreateWindow({Title = "smokernose v1"})
 local Legit = Window:CreateTab("Legit")
 local Aim = Legit:Toggle("Aimbot", false, function(v) print("Aim", v) end)
 Aim:AddSlider({Name = "FOV", Min = 0, Max = 100})
